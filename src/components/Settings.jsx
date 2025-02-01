@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useProject } from '../context/ProjectContext';
+import StorageService from '../services/storage';
 
 function Settings() {
-  const { aiConfig, resources, updateAIConfig } = useProject();
+  const { state, aiConfig, resources, updateAIConfig } = useProject();
   const [formData, setFormData] = useState({
     provider: aiConfig.provider,
     apiKey: aiConfig.apiKey,
@@ -53,8 +54,46 @@ function Settings() {
     }));
   };
 
+  const handleExport = async () => {
+    try {
+      await StorageService.exportToFile(state);
+    } catch (error) {
+      console.error('Export failed:', error);
+    }
+  };
+
+  const handleImport = async () => {
+    try {
+      const importedState = await StorageService.importFromFile();
+      if (importedState) {
+        window.location.reload(); // Reload to apply imported state
+      }
+    } catch (error) {
+      console.error('Import failed:', error);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto space-y-8">
+      {/* Data Management */}
+      <div className="bg-white rounded-lg shadow-sm p-6">
+        <h2 className="text-xl font-semibold mb-6">Data Management</h2>
+        <div className="flex space-x-4">
+          <button
+            onClick={handleExport}
+            className="btn btn-primary"
+          >
+            Export Project Data
+          </button>
+          <button
+            onClick={handleImport}
+            className="btn btn-secondary"
+          >
+            Import Project Data
+          </button>
+        </div>
+      </div>
+
       {/* AI Configuration */}
       <div className="bg-white rounded-lg shadow-sm p-6">
         <h2 className="text-xl font-semibold mb-6">AI Configuration</h2>
