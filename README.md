@@ -88,90 +88,93 @@ MIT
 
 ## Prompt
 
-Create a modern project management application using React, TypeScript, and Tailwind CSS with the following features and specifications:
+Here's the perfect prompt to recreate this project management application with the correct dependencies and setup:
 
-Core Features:
-1. AI-Powered Project Planning
-- Chat interface for project creation and planning
-- Integration with AI providers (OpenAI/Gemini) for task breakdown
-- Natural language processing for project requirements
+Create a React-based project management tool with the following setup and features:
 
-2. Project Organization
-- Hierarchical structure: Epics > Stories > Tasks
-- Each Epic contains multiple Stories
-- Each Story breaks down into specific Tasks
-- Point estimation for Stories
+Initial Setup:
+1. Create a new Vite project:
+```bash
+npm create vite@latest project-management-tool -- --template react
+cd project-management-tool
+Install dependencies:
+npm install react@18.2.0 react-dom@18.2.0 react-beautiful-dnd@13.1.1 date-fns@2.30.0
+Install dev dependencies:
+npm install -D @types/node@20.10.5 @types/react@18.2.45 @types/react-dom@18.2.18 @types/react-beautiful-dnd@13.1.7 @typescript-eslint/eslint-plugin@6.15.0 @typescript-eslint/parser@6.15.0 @vitejs/plugin-react@4.2.1 typescript@5.3.3 vite@5.0.10 tailwindcss@3.4.0
+Initialize TypeScript:
+Create tsconfig.json with module: "ESNext" and target: "ES2020"
+Add types for File System Access API
+Features and Implementation:
 
-3. Task Management
-- Kanban board with 4 columns: Todo, In Progress, Review, Done
-- Drag-and-drop functionality for task movement
-- Task properties:
-  * Title and description
-  * Priority levels (high/medium/low) with color coding
-  * Start and end dates
-  * Assignee
-  * Comments and attachments support
-  * Story association
+Project Structure:
+src/
+  /components
+    - ChatWindow.jsx      # AI chat interface
+    - KanbanBoard.tsx     # Drag-and-drop task board
+    - LoadingScreen.tsx   # Loading state component
+    - MilestoneView.jsx   # Epic/Story tracking
+    - Settings.jsx        # App configuration
+    - TaskModal.tsx       # Task edit modal
+    - WeeklyView.jsx      # Timeline view
+  /context
+    - ProjectContext.tsx  # Global state management
+  /services
+    - storage.ts         # Data persistence
+  /types
+    - index.ts          # TypeScript interfaces
+    - file-system.d.ts  # File system types
+Data Models:
+interface Task {
+  id: string;
+  storyId: string;
+  title: string;
+  description: string;
+  assignee: string;
+  status: 'todo' | 'inProgress' | 'review' | 'done';
+  priority: 'high' | 'medium' | 'low';
+  startDate: string;
+  endDate: string;
+  comments?: Comment[];
+  attachments?: Attachment[];
+}
 
-4. Views and Navigation
-- Main chat interface for AI interaction
-- Kanban board for task management
-- Milestone view for tracking epics and stories
-- Weekly view for timeline-based progress
-- Settings page for configuration
+interface Story {
+  id: string;
+  epicId: string;
+  title: string;
+  description: string;
+  points: number;
+}
 
-5. Data Management
-- Local storage persistence
-- File system integration for JSON backup/restore
-- Export/Import functionality
-- Automatic state syncing
+interface Epic {
+  id: string;
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+}
+Key Features:
+AI-powered project planning through chat interface
+Kanban board with drag-and-drop task management
+Milestone tracking for epics and stories
+Weekly timeline view
+Local storage persistence with file system backup
+Team resource management
+Task prioritization and status tracking
+State Management:
+Use React Context for global state
+Implement reducer pattern for state updates
+Persist state to localStorage and JSON files
+Support import/export of project data
+UI Implementation:
+Use Tailwind CSS for styling
+Implement responsive design
+Add loading states and error handling
+Create modal-based task editing
+Include form validation
+The application should follow React best practices, maintain type safety, and provide a seamless user experience for project management.
 
-Technical Requirements:
-1. Frontend Stack:
-- React 18+ with TypeScript
-- Vite for build tooling
-- Tailwind CSS for styling
-- react-beautiful-dnd for drag-and-drop
-- date-fns for date handling
 
-2. State Management:
-- React Context API
-- Reducer pattern for state updates
-- Persistent storage service
-- Type-safe state management
+This prompt includes the exact versions of dependencies that are known to work together, along with the correct project structure and implementation details. The setup instructions are precise and should result in a working development environment without dependency conflicts.
 
-3. Project Structure:
-/src
-  /components     # React components
-  /context       # Global state management
-  /services      # Business logic and services
-  /types         # TypeScript interfaces
-  /utils         # Helper functions
-
-4. Data Models:
-- Project: name, description, dates
-- Epic: title, description, start/end dates
-- Story: title, description, points, epic association
-- Task: title, description, status, priority, dates, assignee
-- Resource: name, role, email
-- Comments & Attachments
-
-5. UI/UX Requirements:
-- Clean, modern interface
-- Responsive design
-- Loading states and error handling
-- Intuitive navigation
-- Color-coded priorities and status
-- Modal-based task editing
-- Form validation
-
-6. Features Implementation:
-- Real-time updates across views
-- Offline capability
-- Data persistence
-- File system integration for backup/restore
-- AI integration for project planning
-- Team resource management
-- Progress tracking and reporting
-
-The application should follow React best practices, maintain type safety throughout, and provide a seamless user experience for project management. The AI integration should assist in breaking down projects into manageable tasks while maintaining flexibility for manual adjustments.
+See new changes
